@@ -1,0 +1,41 @@
+# Magento Extension Project
+## Service Overview
+Our ProAudio API server accepts webhook data when an order is placed or updated and checks it for item SKUs that are in oir database so that we obtain serial number information and send this to the end customer.
+In order for this to work, all the stores (i.e. Shopufy, WooCommerce, Magento, etc) that our clients (resllers) use must have tge ability to call our webhook URL. Magento does not have this ability out of the box.  
+## Project Summary
+To create a Magento extension using global observers that will call our webhook URL (https://betaproaudio.herokuapp.com/webhooks/magento for beta and https://proaudio.com/webhooks/magento for production) whenever an order is placed or updated.
+The data sent to our server will be in JSON format and will also include an encryption header to ensure data is correct.
+Here's a gist of sampel Shopify order data as well as the headers it sent: https://gist.github.com/cyberwombat/18b20fe0e3dc4777331e38af4ad31ac3
+We don't need all of this data. What we need in the body is:
+- Magento order ID (what the customer sees)
+- Order date
+- Update date
+- Payment status (pending, paid, etc - whatever Magento uses)
+- Fulfillment/Shipping status (shipped, fufilled, etc - whatever Magento uses)
+- Order total
+- Currency used (ex: USD)
+- Customer email
+- Item array:
+ - Item name
+ - Item quantity
+ - Item SKU
+We may add more later but this is a good start. Its fine to send more. A note on status - Magento may or may not have seperate statuses like Shopify does - it may have just one which is fine. We just need to know that an order is paid and ready to go.
+Additonally we want to provide security. The way that is used in Shopify/WooCommerce is to create a hash from the order payload using SHA256 encryption and a secret. In PHP: 
+```
+$yourHashSig = base64_encode(hash_hmac('sha256', $request_body, $secret, true)); // Request body would be done with  `json_encode`
+```
+This signature/hash will be sent in the headers. In the Shopify data in the gist it is `x-shopify-hmac-sha256`. For this project let's call it `x-magento-hmac-sha256`. Additonally let's include another header called `x-magento-domain` which will have the hostname of the store (no htto:// part - ex: mymagento.com). See Shopify header data in gist for an example.
+## UI Requirements
+Initially the extension does not need any UI for testing. Eventually we will want to add a place where the client can enter their secret.
+## Development Steps
+As each of these steps happen we will discuss options prior to beginning as well as usually upload code to GitHub repo https://github.com/proaudiolink/magento
+1. Initial research
+Provide an overview of the resaerch on Magento extensions as well as potential existing extensions that can be used as a starting point
+2. Basic webhook trigger
+Code should ping a webhook with any data on order update/create
+3. Send correct order data 
+Code should send correct order payload - no encyption/headers necessary
+4. Add encryption/secret
+Goal is for API server to be able to correctly decrypt data using headers/secret
+5. UI
+Add final UI for client to add secret as well as either a field to enter webhook URL or a radio button to switch from production/beta in case we decide to hard code the URLs. 
