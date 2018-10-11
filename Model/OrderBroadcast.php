@@ -32,7 +32,7 @@ class OrderBroadcast extends \Magento\Framework\Model\AbstractModel implements \
     public function broadcastOrderEvent($orderData = [])
     {
 
-        $orderJsonData = json_encode(['order' => $orderData]);
+        $orderJsonData = json_encode(['magento_webhook_order_data' => $orderData]);
         $this->logger->notice('order data: ' . $orderJsonData);
         $this->sendRequestViaCurl($orderJsonData);
     }
