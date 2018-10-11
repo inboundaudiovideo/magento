@@ -25,11 +25,10 @@ class Rayms_OrderEventsBroadcaster_Model_OrderBroadcast
         $secretKey =  Mage::getStoreConfig(self::SECRET_KEY);
         $hash = base64_encode(hash_hmac('sha256', $data, $secretKey, true));
         $headers = array(
-
-            'Content-Type'          => 'application/json',                                                                                
-            'Content-Length'        => strlen($data),
-            'X-Magento-Hmac-SHA256' => $hash,
-            'X-Magento-Domain'      => 'mydomain.com'
+            'Content-Type:application/json',                                                                                
+            'Content-Length:' . strlen($data),
+            'X-Magento-Hmac-SHA256:'. $hash,
+            'X-Magento-Domain:mydomain.com'
         );
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->getRequestUrl());

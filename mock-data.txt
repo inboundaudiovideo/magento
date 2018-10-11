@@ -1,47 +1,50 @@
-magento_webhook_order_data: {
-
-    "order_id":"100000075",
-    "order_status":"new",
-    "order_date":"2018-10-11 06:13:55",
-    "order_date_updated":"2018-10-11 06:13:55",
-    "shipping_method":"flatrate_flatrate",
-    "order_total":474,"currency":"USD",
-    "customer_id":"2",
-    "customer_name":"Raymund Santillan",
-    "customer_email":"ray@gmail.com",
-    "line_items":[
-        {
-            "product_id":"1",
-            "product_sku":"123",
-            "product_name":"GG Shirt",
-            "product_price":232,
-            "ordered_qty":2
+{
+    magento_webhook_order_data: {
+        "order_id":"100000075",
+        "order_status":"new",
+        "order_date":"2018-10-11 06:13:55",
+        "order_date_updated":"2018-10-11 06:13:55",
+        "shipping_method":"flatrate_flatrate",
+        "order_total":474,"currency":"USD",
+        "customer_id":"2",
+        "customer_name":"Raymund Santillan",
+        "customer_email":"ray@gmail.com",
+        "line_items":[
+            {
+                "product_id":"1",
+                "product_sku":"123",
+                "product_name":"GG Shirt",
+                "product_price":232,
+                "ordered_qty":2
+            },
+            {
+                "product_id":"2",
+                "product_sku":"shirt223",
+                "product_name":"Gamified Shirt",
+                "product_price":50,"ordered_qty":5
+            }
+        ],
+        "shipping_address":{
+            "street":"Lot 7, Block.1 City Heights Subd Brgy. Taculing",
+            "city":"Bago","region":"Negros Occidental",
+            "country":"PH",
+            "shipper_name":"Keller Cruz"
         },
-        {
-            "product_id":"2",
-            "product_sku":"shirt223",
-            "product_name":"Gamified Shirt",
-            "product_price":50,"ordered_qty":5
+        "billing_address":{
+            "street":"Lot 72, Block.21 City Heights Subd Brgy. Taculing",
+            "city":"Silay","region":"Negros Occidental",
+            "country":"PH",
+            "shipper_name":"Keller Cruz"
         }
-    ],
-    "shipping_address":{
-        "street":"Lot 7, Block.1 City Heights Subd Brgy. Taculing",
-        "city":"Bago","region":"Negros Occidental",
-        "country":"PH",
-        "shipper_name":"Keller Cruz"
-    },
-    "billing_address":{
-        "street":"Lot 72, Block.21 City Heights Subd Brgy. Taculing",
-        "city":"Silay","region":"Negros Occidental",
-        "country":"PH",
-        "shipper_name":"Keller Cruz"
     }
 }
 
-magento_webhook_headers: {
-    "Content-Type":"application/json",
-    "Content-Length":906,
-    "X-Magento-Hmac-SHA256":"JvrT6cdudEzuD9GoNckwBn7PcHAZribBgS4nLydQvC8=",
-    "X-Magento-Domain":"mydomain.com"
+{
+    magento_webhook_headers: {
+        "Content-Type":"application/json",
+        "Content-Length":906,
+        "X-Magento-Hmac-SHA256":"JvrT6cdudEzuD9GoNckwBn7PcHAZribBgS4nLydQvC8=",
+        "X-Magento-Domain":"mydomain.com"
+    }
 }
 
