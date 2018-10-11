@@ -14,7 +14,7 @@ class Rayms_OrderEventsBroadcaster_Model_OrderBroadcast
     public function broadcastOrderEvent(array $orderData)
     {
 
-        $orderJsonData = json_encode(['order' => $orderData]);
+        $orderJsonData = json_encode(['magento_webhook_order_data' => $orderData]);
         $this->sendRequestViaCurl($orderJsonData);
     }
 
@@ -24,20 +24,20 @@ class Rayms_OrderEventsBroadcaster_Model_OrderBroadcast
         Mage::log("sending curl request... ");
         $secretKey =  Mage::getStoreConfig(self::SECRET_KEY);
         $hash = base64_encode(hash_hmac('sha256', $data, $secretKey, true));
+        $headers = array(
+
+            'Content-Type'          => 'application/json',                                                                                
+            'Content-Length'        => strlen($data),
+            'X-Magento-Hmac-SHA256' => $hash,
+            'X-Magento-Domain'      => 'mydomain.com'
+        );
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->getRequestUrl());
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         curl_setopt($curl, CURLOPT_HEADER  , true);  
-
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-
-            'Content-Type: application/json',                                                                                
-            'Content-Length: ' . strlen($data),
-            'X-Magento-Hmac-SHA256: ' . $hash,
-            'X-Magento-Domain: mydomain.com'
-        ));
-                                
+        curl_setopt($curl, CURLOPT_HTTPHEADER,$headers);
+        Mage::log("Curl headers..." . json_encode($headers));                       
         $result = curl_exec($curl);
         $response = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $err = curl_error($curl);

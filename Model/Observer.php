@@ -70,9 +70,11 @@ class Rayms_OrderEventsBroadcaster_Model_Observer
             'billing_address'               =>      $billingAddress
   
         ];
+        
+        // echo json_encode($orderParams);
        
-        Mage::log("order params :: " . json_encode($orderParams));
-
+        Mage::log("order params :: " . json_encode(['magento_order_data' => $orderParams]));
+        
         // broadcast the data from the event to a web hook
         Mage::getModel('rayms_ordereventsbroadcaster_model/orderbroadcast')->broadcastOrderEvent($orderParams);
         
