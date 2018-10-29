@@ -41,6 +41,7 @@ class OrderBroadcast extends \Magento\Framework\Model\AbstractModel implements \
     {
 
         $this->logger->notice('Sending curl request...');
+        $this->logger->notice('host' .  $_SERVER['SERVER_NAME']);
         $secretKey = $this->scopeConfig->getValue(self::CONFIG_SECRET_KEY, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
         $hash = base64_encode(hash_hmac('sha256', $data, $secretKey, true));
         $curl = curl_init();
@@ -48,13 +49,12 @@ class OrderBroadcast extends \Magento\Framework\Model\AbstractModel implements \
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         curl_setopt($curl, CURLOPT_HEADER  , true);  
-
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
 
             'Content-Type: application/json',                                                                                
             'Content-Length: ' . strlen($data),
             'X-Magento-Hmac-SHA256: ' . $hash,
-            'X-Magento-Domain: mydomain.com'
+            'X-Magento-Domain: '. $_SERVER['SERVER_NAME']
         ));
                                 
         $result = curl_exec($curl);
@@ -76,7 +76,7 @@ class OrderBroadcast extends \Magento\Framework\Model\AbstractModel implements \
         
         $this->logger->notice('status mode : '. $statusMode);
 
-        if ($statusMode == 'beta') {
+        if ($statusMode == 'test') {
 
             return self::BETA_BROADCAST_ENDPOINT;
         }

@@ -17,13 +17,16 @@ class BillingAddress extends AbstractAddress
 
    public function getStreet() : string 
    {
+        if (!empty($this->address->getStreet()[1])) {
+            if (!empty($this->address->getStreet()[2])) {
+                return $this->address->getStreet()[0]. ','. $this->address->getStreet()[1]
+                    .', '.$this->address->getStreet()[2];
+            } else {
+                return $this->address->getStreet()[0]. ','. $this->address->getStreet()[1];
+            }
         
-        if (!empty($this->address->getStreet())) {
-
-            return $this->address->getStreet()[0]. ' '. $this->address->getStreet()[1];
         }
-        
-        return "n/a";
+        return $this->address->getStreet()[0];
    }
 
    public function getCity() : string 

@@ -11,13 +11,16 @@ class OrderPlacedObserver implements \Magento\Framework\Event\ObserverInterface
 
   private $orderBroadCastModel;
   private $logger;
-
   private $_storeManager;
   private $checkoutSession;
   private $registry;
   private $resultJsonFactory;
   private $shippingAddress;
   private $billingAddress;
+  private $scopeConfig;
+
+  const CONFIG_STATUS_MODE = 'ordereventsbroadcaster/general/status_mode';
+
   
     
     public function __construct(
@@ -27,7 +30,8 @@ class OrderPlacedObserver implements \Magento\Framework\Event\ObserverInterface
         \Magento\Framework\App\Action\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager, 
         \Magento\Checkout\Model\Session $checkoutSession,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
       )
     {
       $this->orderBroadCastModel = $orderBroadCastModel;
@@ -37,10 +41,20 @@ class OrderPlacedObserver implements \Magento\Framework\Event\ObserverInterface
       $this->checkoutSession = $checkoutSession;
       $this->registry = $registry;
       $this->resultJsonFactory = $resultJsonFactory;
+      $this->scopeConfig = $scopeConfig;
+
     }
     
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
+      // check for disable mode 
+      $mode = $this->scopeConfig->getValue(self::CONFIG_STATUS_MODE, 
+                    \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+      if ($mode === 'disabled') {
+        $this->logger->notice('Mode is disabled');
+        // don't trigger
+        return false;
+      }
          
       $this->logger->notice('Order observer triggered!');
 

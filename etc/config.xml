@@ -5,8 +5,8 @@ xsi:noNamespaceSchemaLocation="../../Core/etc/config.xsd">
     <default>
         <ordereventsbroadcaster>
             <general>
-                <status_mode>beta</status_mode>
-                <secret_key>mysecret</secret_key>
+                <status_mode>test</status_mode>
+                <secret_key></secret_key>
                 <info_text>
                      For more information please read the documentation at https://github.com/proaudiolink/documentation/wiki/Magento-source-setup.
                 </info_text>

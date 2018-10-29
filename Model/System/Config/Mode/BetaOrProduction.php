@@ -9,7 +9,6 @@ class BetaOrProduction implements ArrayInterface
 
     public function toOptionArray()
     {
-        return [['value' => 'beta', 'label' => __('Test')], ['value' => 'production', 'label' => __('Production')],];
-
+        return [['value' => 'disabled', 'label' => __('Disable')],['value' => 'test', 'label' => __('Test')], ['value' => 'production', 'label' => __('Production')],];
     }
 }
