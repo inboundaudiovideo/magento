@@ -2,14 +2,14 @@
 <config>
     <tabs>
         <rayms module="rayms_ordereventsbroadcaster">
-            <label>Order Events Broadcaster</label>
+            <label>ProAudio</label>
             <sort_order>1000</sort_order>
         </rayms>
     </tabs>
     <sections>
         <ordereventsbroadcaster module="adminhtml">
-            <label>Broadcast Settings </label>
-            <tab>rayms</tab>
+            <label>ProAudio Settings </label>
+            <tab>sales</tab>
             <sort_order>1000</sort_order>
             <show_in_default>1</show_in_default>
             <show_in_website>1</show_in_website>
@@ -23,7 +23,7 @@
                     <show_in_store>1</show_in_store>
                     <fields>
                         <status_mode>
-                            <label>Status Mode</label>
+                            <label>Mode</label>
                             <frontend_type>select</frontend_type>
                             <source_model>Rayms_OrderEventsBroadcaster_Model_BetaOrProduction</source_model>
                             <show_in_default>1</show_in_default>
@@ -40,17 +40,6 @@
                             <show_in_store>1</show_in_store>
                             <sort_order>2</sort_order>
                         </secret_key>
-                        <info_text>
-                            <label>NOTE:</label>
-                            <comment>
-                                For more information please read the documentation at https://github.com/proaudiolink/documentation/wiki/Magento-source-setup.
-                            </comment>
-                            <frontend_type>label</frontend_type>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                            <sort_order>3</sort_order>
-                        </info_text>
                     </fields>
                 </general>
             </groups>

@@ -3,9 +3,16 @@
 
 class Rayms_OrderEventsBroadcaster_Model_Observer
 {
+    const CONFIG_STATUS_MODE = 'ordereventsbroadcaster/general/status_mode';
+
     public function broadCastForOrderChanges(Varien_Event_Observer $observer)
     {
-
+        if (Mage::getStoreConfig(self::CONFIG_STATUS_MODE) == 'disabled') {
+            // dont trigger
+            Mage::log("disabled");
+            return false;
+        }
+        
         $event = $observer->getEvent();
         $order = $event->getOrder();
 

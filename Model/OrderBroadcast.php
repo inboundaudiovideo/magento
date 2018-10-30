@@ -6,7 +6,7 @@ class Rayms_OrderEventsBroadcaster_Model_OrderBroadcast
 
     const BETA_BROADCAST_ENDPOINT    = 'https://betaproaudio.herokuapp.com/webhooks/magento';
     const PROD_BROADCAST_ENDPOINT    = 'https://proaudio.com/webhooks/magento';
-    const SECRET_KEY = 'mysecret';
+    const SECRET_KEY = '';
     const CACHE_TAG = 'inbound_av_cache';
     const CONFIG_SECRET_KEY = 'ordereventsbroadcaster/general/secret_key';
     const CONFIG_STATUS_MODE = 'ordereventsbroadcaster/general/status_mode';
@@ -28,7 +28,7 @@ class Rayms_OrderEventsBroadcaster_Model_OrderBroadcast
             'Content-Type:application/json',                                                                                
             'Content-Length:' . strlen($data),
             'X-Magento-Hmac-SHA256:'. $hash,
-            'X-Magento-Domain:mydomain.com'
+            'X-Magento-Domain: '.$_SERVER['SERVER_NAME']
         );
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->getRequestUrl());
@@ -56,7 +56,7 @@ class Rayms_OrderEventsBroadcaster_Model_OrderBroadcast
         
         Mage::log("Status mode : " . $statusMode);
 
-        if ($statusMode == 'beta') {
+        if ($statusMode == 'test') {
 
             return self::BETA_BROADCAST_ENDPOINT;
         }

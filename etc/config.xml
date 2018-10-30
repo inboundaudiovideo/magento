@@ -33,8 +33,8 @@
     <default>
         <order_events_broadcaster>
             <general>
-                <status_mode>Beta</status_mode>
-                <secret_key>mysecret</secret_key>
+                <status_mode>Test</status_mode>
+                <secret_key></secret_key>
             </general>
         </order_events_broadcaster>
     </default>
