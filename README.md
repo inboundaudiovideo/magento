@@ -3,6 +3,7 @@
 2. Inside the OrderEventsBroadcaster folder, clone the repository, run ```git clone https://github.com/proaudiolink/magento.git```
 3. Under the project root directory, run the following commands : 
 ```
+bin/magento module:enable Rayms_OrderEventsBroadcaster
 bin/magento setup:upgrade
 bin/magento setup:di:compile
 ```
