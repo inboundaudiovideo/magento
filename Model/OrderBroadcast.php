@@ -32,14 +32,13 @@ class OrderBroadcast extends \Magento\Framework\Model\AbstractModel implements \
     public function broadcastOrderEvent($orderData = [])
     {
 
-        $orderJsonData = json_encode(['magento_webhook_order_data' => $orderData]);
+        $orderJsonData = json_encode($orderData);
         $this->logger->notice('order data: ' . $orderJsonData);
         $this->sendRequestViaCurl($orderJsonData);
     }
 
     public function sendRequestViaCurl($data)
     {
-
         $this->logger->notice('Sending curl request...');
         $this->logger->notice('host' .  $_SERVER['SERVER_NAME']);
         $secretKey = $this->scopeConfig->getValue(self::CONFIG_SECRET_KEY, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
