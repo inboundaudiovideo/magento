@@ -14,7 +14,7 @@ class Rayms_OrderEventsBroadcaster_Model_OrderBroadcast
     public function broadcastOrderEvent(array $orderData)
     {
 
-        $orderJsonData = json_encode(['magento_webhook_order_data' => $orderData]);
+        $orderJsonData = json_encode($orderData);
         $this->sendRequestViaCurl($orderJsonData);
     }
 
